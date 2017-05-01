@@ -19,4 +19,13 @@ body {
 .img-medium {
     height: 200px;
 }
-
+.cont{
+                
+             font-family: Arial;
+             margin: 0 auto;
+             max-width: 800px;
+             color: grey;
+             padding-top: 70;
+             padding-left: 30;
+             padding-right: 30;
+            }

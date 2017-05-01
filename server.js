@@ -37,8 +37,10 @@ app.use(morgan('combined'));
         <div>
             ${date}
         </div>
-        ${content}
-         </div>
+        <div>
+         ${content}
+        </div>
+        </div>
     </body>
 </html>
   ';

@@ -4,47 +4,27 @@ var path = require('path');
 
 var app = express();
 app.use(morgan('combined'));
- var articles={
-     articleone: {
+ var  articleOne = {
              title: 'Article one',
              heading: 'Article-one',
              date:'Sep 5,2016',
              content: `<p>
                     This is the content of my first web page
                 </p>`
-         },
-    articletwo:
-                {
-               title: 'Article two',
-                 heading: 'Article-two',
-                 date:'Sep 5,2016',
-                 content: `<p>
-                        This is the content of my second web page
-                    </p>`   
-                 },
-    articlethree:
-                 {
-                      title: 'Article three',
-                     heading: 'Article-three',
-                     date:'Sep 5,2016',
-                     content: `<p>
-                            This is the content of my third web page
-                        </p>`
-                 }
- };
+          };
  function createTemplate(data){
      var title=data.title;
      var heading=data.heading;
      var date=data.date;
      var content=data.content;
- var htmlTemplate=` 
- <html>
-    <head>
-        <title>
-            ${title}
-        </title>
+     var htmlTemplate=` 
+         <html>
+            <head>
+                  <title>
+                     ${title}
+                  </title>
         <link href="/ui/style.css" rel="stylesheet" />
-    </head>
+            </head>
     <body>
         <div class="cont">
         <div>
@@ -52,7 +32,7 @@ app.use(morgan('combined'));
         </div>
         <br/>
         <h3>
-         ${heading}
+           ${heading}
         </h3>
         <div>
             ${date}
@@ -63,19 +43,16 @@ app.use(morgan('combined'));
         </div>
     </body>
 </html>
-  ';
-  return htmlTemplate;
+';
+return htmlTemplate;
 }
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/:articleName',function(req,res)
+app.get('/',function(req,res)
 { 
- //articleName==article-one
- //articles[articleName]=={} content object for article one
- var articleName= req.params.articleName;
-  res.send(createTemplate(articles[articleName]));  
+  res.send(createTemplate(articleOne));  
 });
 app.get('/article-two',function(req,res)
 {
@@ -92,9 +69,7 @@ app.get('/ui/style.css', function (req, res) {
 app.get('/ui/madi.png', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'madi.png'));
 });
-
-
-var port = 8080; // Use 8080 for local development because you might already have apache running on 80
+var port = 8080; // Use 8080 for local development because you might already have apache running on 8080
 app.listen(8080, function (){
   console.log(`IMAD course app listening on port ${port}!`);
 });

@@ -31,8 +31,7 @@ button.onclick=function(){
 };
 
 //Submit name
-var nameInput=document.getElementById('name');
-var name=nameInput.value;
+
 var submit=document.getElementById('submit_btn');
 submit.onclick=function()
 {
@@ -61,6 +60,8 @@ submit.onclick=function()
     };
     
     //Make the request
+    var nameInput=document.getElementById('name');
+    var name=nameInput.value;
     request.open('GET','http://santhanalakshmimano.imad.hasura-app.io/submit-name?name='+ name, true);
     request.send(null);
     

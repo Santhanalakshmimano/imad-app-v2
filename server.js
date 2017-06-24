@@ -2,7 +2,7 @@ var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
 var Pool = require('pg').Pool;
-var crypto=require('crypto');
+var crypto= require('crypto');
 var bodyParser = require('body-parser');
 
 
@@ -70,7 +70,7 @@ function hash(input,salt)
 
 
 app.get('/hash/:input',function(req,res){
-    var hashedString = hash(req.params.input,"this-is-some-random-string");
+    var hashedString = hash(req.params.input,'this-is-some-random-string');
     res.send(hashedString);
 });
 
@@ -90,6 +90,36 @@ app.post('/create-user',function(req,res){
     }else
     {
         res.send("User successfully created: " +username);
+    }
+        
+    });
+});
+
+app.post('/login',function(req,res)
+{
+     var username= req.body.username;
+    var password= req.body.password;
+    
+    pool.query('SELECT *from "user" username= $1',[username], function (err,result) {
+            if(err)
+    {
+        res.status(500).send(err.toString());
+    }else
+    {
+        if(result.rows.length===0){
+            res.send(403).send('username/password is invalid');
+        }
+        else{
+            //Match the password
+            var dbString = result.rows[0].password;
+            var salt= dbString.split('$')[2];
+            var hashedPassword= hash(password, salt); //Creating a hash based on the password submitted and the original salt
+            if(hashedPassword === dbString){
+                res.send('credentials correct!');
+            }else{
+                res.send(403).send('username/password is invalid');
+            }
+        }
     }
         
     });
